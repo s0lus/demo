@@ -31,11 +31,4 @@ class Employee extends Model
 
         return ($this->salary * $bonus->value()) / 100;
     }
-
-    public function calculateBonus(): int
-    {
-        $bonus = Bonus::fromEmployee($this);
-
-        return ($this->salary * $bonus->value()) / 100;
-    }
 }
