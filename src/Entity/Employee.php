@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
+use App\ValueObject\Bonus;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -80,15 +81,22 @@ class Employee
         return $this;
     }
 
-    public function getRating(): ?Rating
+    public function getRating(): Rating
     {
         return $this->rating;
     }
 
-    public function setRating(?Rating $rating): self
+    public function setRating(Rating $rating): self
     {
         $this->rating = $rating;
 
         return $this;
+    }
+
+    public function calculateBonus(): int
+    {
+        $bonus = Bonus::fromEmployee($this);
+
+        return ($this->salary * $bonus->value()) / 100;
     }
 }
