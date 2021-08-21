@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
@@ -17,32 +19,41 @@ class Employee
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $salary;
-
-    /**
-     * @ORM\ManyToOne(fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity=Rating::class, fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private Rating $rating;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $email;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $salary;
+
+    public function __construct(int $id, string $name, string $email, int $salary, Rating $rating)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->email = $email;
+        $this->salary = $salary;
+        $this->rating = $rating;
+    }
+
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->rating->getEmployeeId();
     }
 
     public function getName(): ?string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\RatingRepository;
@@ -13,7 +15,7 @@ class Rating
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -21,14 +23,20 @@ class Rating
     /**
      * @ORM\Column(type="integer")
      */
-    private $rating;
+    private int $rating;
+
+    public function __construct(int $id, int $rating)
+    {
+        $this->id = $id;
+        $this->rating = $rating;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRating(): ?int
+    public function getRating(): int
     {
         return $this->rating;
     }

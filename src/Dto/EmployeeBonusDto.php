@@ -20,6 +20,8 @@ final class EmployeeBonusDto implements \JsonSerializable
 
     private Bonus $bonus;
 
+    private int $calculatedBonus;
+
     public function __construct(
         string $name,
         int $salary,
@@ -28,8 +30,7 @@ final class EmployeeBonusDto implements \JsonSerializable
         int $total,
         Bonus $bonus,
         int $calculatedBonus
-    )
-    {
+    ) {
         $this->name = $name;
         $this->salary = $salary;
         $this->rating = $rating;
@@ -39,7 +40,10 @@ final class EmployeeBonusDto implements \JsonSerializable
         $this->calculatedBonus = $calculatedBonus;
     }
 
-    private int $calculatedBonus;
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
 
     public function jsonSerialize()
     {

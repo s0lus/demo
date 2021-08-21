@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Dto\EmployeeBonusDto;
+use App\Entity\Employee;
 use App\Repository\EmployeeRepositoryInterface;
 use App\ValueObject\Bonus;
 
@@ -26,7 +27,7 @@ final class EmployeeService
             $sum += $employee->getSalary();
         }
 
-        return $sum / \count($employees);
+        return (int) ($sum / \count($employees));
     }
 
     public function calculateBonuses()
@@ -34,6 +35,7 @@ final class EmployeeService
         $employees = $this->employeeRepository->findBy([], ['salary' => 'DESC']);
 
         $result = [];
+        /** @var Employee $employee */
         foreach ($employees as $employee) {
             $calculatedBonus = $employee->calculateBonus();
 
